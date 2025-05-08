@@ -25,6 +25,8 @@ dependencies {
     implementation(libs.jjwt.api)
     runtimeOnly  (libs.jjwt.impl)
     runtimeOnly  (libs.jjwt.jackson)
+    implementation("org.springframework.security:spring-security-oauth2-client")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
 
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.kotlin.test.junit5)

@@ -18,8 +18,10 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 @Configuration
 class SecurityConfig(
   private val handlerExceptionResolver: HandlerExceptionResolver,
+  private val customOAuth2UserService: CustomOAuth2UserService,
   private val jwtTokenProvider: JwtTokenProvider,
-  private val corsConfigSource: CorsConfigurationSource
+  private val corsConfigSource: CorsConfigurationSource,
+  private val oAuth2AuthenticationSuccessHandler: OAuth2AuthenticationSuccessHandler,
 ){
   @Bean
   fun filterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
@@ -31,6 +33,10 @@ class SecurityConfig(
       .requestMatchers(HttpMethod.POST, "/api/v1/members/login").permitAll()
       .anyRequest().authenticated()
     }
+      .oauth2Login { oauth2 ->
+        oauth2.userInfoEndpoint { it.userService(customOAuth2UserService) }
+          .successHandler(oAuth2AuthenticationSuccessHandler)
+      }
       .logout{it.disable()}
       .cors{it.configurationSource(corsConfigSource)}
       .addFilterAt(jwtAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter::class.java)

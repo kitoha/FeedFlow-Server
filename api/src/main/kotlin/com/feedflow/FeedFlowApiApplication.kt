@@ -1,4 +1,4 @@
-package com.feedflow.api
+package com.feedflow
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

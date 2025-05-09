@@ -9,4 +9,5 @@ java {
 }
 
 dependencies {
+  implementation(libs.hypersistence.tsid)
 }

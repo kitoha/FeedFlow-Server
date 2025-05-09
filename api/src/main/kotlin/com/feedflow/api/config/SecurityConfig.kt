@@ -14,8 +14,8 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.servlet.HandlerExceptionResolver
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 class SecurityConfig(
   private val handlerExceptionResolver: HandlerExceptionResolver,
   private val customOAuth2UserService: CustomOAuth2UserService,
@@ -50,7 +50,6 @@ class SecurityConfig(
             handlerExceptionResolver.resolveException(request, response, null, accessDeniedException)
           }
       }
-      .build()
 
     return httpSecurity.build()
   }

@@ -1,5 +1,6 @@
 package com.feedflow.api.config
 
+import com.feedflow.api.dto.CustomOAuth2User
 import com.feedflow.application.port.OAuth2UserInfoExtractor
 import com.feedflow.application.service.UserService
 import com.feedflow.domain.enums.AuthProviderType
@@ -37,6 +38,6 @@ class CustomOAuth2UserService (private val userService: UserService,
 
     val user = userService.getUserInfo(oAuth2UserInfo)
 
-    return DefaultOAuth2User(authorities, attributes, userNameAttr)
+    return CustomOAuth2User(DefaultOAuth2User(authorities, attributes, userNameAttr), user.id)
   }
 }

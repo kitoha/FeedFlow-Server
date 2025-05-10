@@ -16,10 +16,17 @@ dependencies {
     implementation(project(":infrastructure"))
 
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.security)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.kotlin.reflect)
 
     developmentOnly(libs.spring.boot.devtools)
+
+    implementation(libs.jjwt.api)
+    runtimeOnly  (libs.jjwt.impl)
+    runtimeOnly  (libs.jjwt.jackson)
+    implementation("org.springframework.security:spring-security-oauth2-client")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
 
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.kotlin.test.junit5)

@@ -1,8 +1,9 @@
-package com.feedflow.infrastructure.entity
+package com.feedflow.infrastructure.entity.auth
 
-import com.feedflow.domain.enums.AuthProviderType
+import com.feedflow.domain.enums.auth.AuthProviderType
 import com.feedflow.domain.model.AuthProvider
 import com.feedflow.domain.utils.Tsid
+import com.feedflow.infrastructure.entity.user.UserEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -46,7 +47,7 @@ class AuthProviderEntity(
   }
 
   companion object{
-    fun from(authProvider: AuthProvider): AuthProviderEntity{
+    fun from(authProvider: AuthProvider): AuthProviderEntity {
       return AuthProviderEntity(
         id = Tsid.decode(authProvider.id),
         authProviderType = authProvider.authProviderType,

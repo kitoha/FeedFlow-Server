@@ -1,4 +1,4 @@
-package com.feedflow.domain.enums
+package com.feedflow.domain.enums.auth
 
 import java.util.Locale
 

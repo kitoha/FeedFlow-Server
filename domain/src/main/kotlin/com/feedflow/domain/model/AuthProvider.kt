@@ -1,6 +1,6 @@
 package com.feedflow.domain.model
 
-import com.feedflow.domain.enums.AuthProviderType
+import com.feedflow.domain.enums.auth.AuthProviderType
 import com.feedflow.domain.utils.Tsid
 import java.time.LocalDateTime
 

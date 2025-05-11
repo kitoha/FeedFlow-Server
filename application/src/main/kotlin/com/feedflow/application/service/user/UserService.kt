@@ -1,7 +1,7 @@
-package com.feedflow.application.service
+package com.feedflow.application.service.user
 
 import com.feedflow.application.dto.OAuth2UserInfo
-import com.feedflow.domain.enums.AuthProviderType
+import com.feedflow.domain.enums.auth.AuthProviderType
 import com.feedflow.domain.model.AuthProvider
 import com.feedflow.domain.model.User
 import com.feedflow.domain.port.AuthProviderRepository

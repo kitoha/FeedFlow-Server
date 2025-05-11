@@ -1,6 +1,6 @@
-package com.feedflow.infrastructure.entity
+package com.feedflow.infrastructure.entity.user
 
-import com.feedflow.domain.enums.UserStatus
+import com.feedflow.domain.enums.user.UserStatus
 import com.feedflow.domain.model.User
 import com.feedflow.domain.utils.Tsid
 import jakarta.persistence.*
@@ -48,7 +48,7 @@ class UserEntity(
   }
 
   companion object{
-    fun from(user: User): UserEntity{
+    fun from(user: User): UserEntity {
       return UserEntity(
         id = Tsid.decode(user.id),
         email = user.email,

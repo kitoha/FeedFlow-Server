@@ -1,6 +1,6 @@
 package com.feedflow.domain.model
 
-import com.feedflow.domain.enums.UserStatus
+import com.feedflow.domain.enums.user.UserStatus
 import com.feedflow.domain.utils.Tsid
 import java.time.LocalDateTime
 

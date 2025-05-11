@@ -1,4 +1,4 @@
-package com.feedflow.domain.enums
+package com.feedflow.domain.enums.user
 
 enum class UserStatus {
   ACTIVE,  // 활성 고객

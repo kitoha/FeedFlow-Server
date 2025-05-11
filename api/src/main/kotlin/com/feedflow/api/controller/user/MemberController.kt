@@ -1,4 +1,4 @@
-package com.feedflow.api.controller
+package com.feedflow.api.controller.user
 
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

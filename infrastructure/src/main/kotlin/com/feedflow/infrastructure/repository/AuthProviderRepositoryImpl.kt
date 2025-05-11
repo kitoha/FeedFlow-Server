@@ -2,7 +2,7 @@ package com.feedflow.infrastructure.repository
 
 import com.feedflow.domain.model.AuthProvider
 import com.feedflow.domain.port.AuthProviderRepository
-import com.feedflow.infrastructure.entity.AuthProviderEntity
+import com.feedflow.infrastructure.entity.auth.AuthProviderEntity
 import org.springframework.stereotype.Repository
 
 @Repository

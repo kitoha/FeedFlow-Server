@@ -2,7 +2,7 @@ package com.feedflow.infrastructure.extractor
 
 import com.feedflow.application.dto.OAuth2UserInfo
 import com.feedflow.application.port.OAuth2UserInfoExtractor
-import com.feedflow.domain.enums.AuthProviderType
+import com.feedflow.domain.enums.auth.AuthProviderType
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,6 +1,6 @@
-package com.feedflow.domain.port
+package com.feedflow.domain.port.user
 
-import com.feedflow.domain.model.User
+import com.feedflow.domain.model.user.User
 
 interface UserRepository {
   fun save(user: User): User

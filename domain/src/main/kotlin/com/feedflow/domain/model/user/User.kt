@@ -1,4 +1,4 @@
-package com.feedflow.domain.model
+package com.feedflow.domain.model.user
 
 import com.feedflow.domain.enums.user.UserStatus
 import com.feedflow.domain.utils.Tsid

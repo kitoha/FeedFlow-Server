@@ -12,4 +12,5 @@ java {
 dependencies {
     implementation(project(":domain"))
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.data.jpa)
 }

@@ -1,7 +1,7 @@
-package com.feedflow.infrastructure.repository
+package com.feedflow.infrastructure.repository.user
 
-import com.feedflow.domain.model.User
-import com.feedflow.domain.port.UserRepository
+import com.feedflow.domain.model.user.User
+import com.feedflow.domain.port.user.UserRepository
 import com.feedflow.infrastructure.entity.user.UserEntity
 import org.springframework.stereotype.Repository
 

@@ -1,4 +1,4 @@
-package com.feedflow.infrastructure.repository
+package com.feedflow.infrastructure.repository.auth
 
 import com.feedflow.infrastructure.entity.auth.AuthProviderEntity
 import org.springframework.data.jpa.repository.JpaRepository

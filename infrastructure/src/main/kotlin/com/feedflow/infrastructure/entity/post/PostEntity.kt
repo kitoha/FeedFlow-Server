@@ -1,6 +1,8 @@
 package com.feedflow.infrastructure.entity.post
 
 import com.feedflow.domain.enums.post.VisibilityType
+import com.feedflow.domain.model.post.Post
+import com.feedflow.domain.utils.Tsid
 import jakarta.persistence.CollectionTable
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
@@ -17,10 +19,10 @@ import java.time.LocalDateTime
 class PostEntity(
   @Id
   @Column(name = "id")
-  val id: String,
+  val id: Long,
 
   @Column(name = "user_id", nullable = false)
-  val userId: String,
+  val authorId: String,
 
   @Column(name = "content", nullable = false, length = 5000)
   var content: String,
@@ -45,4 +47,30 @@ class PostEntity(
 
   @Column(name = "deleted_at", nullable = false)
   val deletedAt: LocalDateTime?
-)
+){
+  fun toPost() : Post{
+    return Post(id = Tsid.encode(id),
+      authorId = authorId,
+      content = content,
+      mediaUrls = mediaUrls.toMutableList(),
+      visibility = visibility,
+      createdAt =  createdAt,
+      updatedAt = updatedAt,
+      deletedAt = deletedAt)
+  }
+
+  companion object{
+    fun from(post: Post): PostEntity{
+      return PostEntity(
+        id = Tsid.decode(post.id),
+        authorId = post.authorId,
+        content = post.content,
+        mediaUrls = post.mediaUrls.toMutableList(),
+        visibility = post.visibility,
+        createdAt =  post.createdAt,
+        updatedAt = post.updatedAt,
+        deletedAt = post.deletedAt
+      )
+    }
+  }
+}

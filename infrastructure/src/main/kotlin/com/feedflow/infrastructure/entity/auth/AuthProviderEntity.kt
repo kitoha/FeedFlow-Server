@@ -1,7 +1,7 @@
 package com.feedflow.infrastructure.entity.auth
 
 import com.feedflow.domain.enums.auth.AuthProviderType
-import com.feedflow.domain.model.AuthProvider
+import com.feedflow.domain.model.auth.AuthProvider
 import com.feedflow.domain.utils.Tsid
 import com.feedflow.infrastructure.entity.user.UserEntity
 import jakarta.persistence.*
@@ -34,7 +34,7 @@ class AuthProviderEntity(
   val user: UserEntity
 ) {
 
-  fun toAuthProvider(): AuthProvider{
+  fun toAuthProvider(): AuthProvider {
     return AuthProvider(
       id = Tsid.encode(id),
       authProviderType = authProviderType,

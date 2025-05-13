@@ -1,7 +1,7 @@
 package com.feedflow.infrastructure.entity.user
 
 import com.feedflow.domain.enums.user.UserStatus
-import com.feedflow.domain.model.User
+import com.feedflow.domain.model.user.User
 import com.feedflow.domain.utils.Tsid
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -34,7 +34,7 @@ class UserEntity(
   @Column
   val deletedAt: LocalDateTime?
 ) {
-  fun toUser(): User{
+  fun toUser(): User {
     return User(
       id = Tsid.encode(id),
       email = email,

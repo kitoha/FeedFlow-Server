@@ -1,4 +1,4 @@
-package com.feedflow.infrastructure.repository
+package com.feedflow.infrastructure.repository.user
 
 import com.feedflow.infrastructure.entity.user.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository

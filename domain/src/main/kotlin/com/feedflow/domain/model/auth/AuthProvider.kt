@@ -1,6 +1,7 @@
-package com.feedflow.domain.model
+package com.feedflow.domain.model.auth
 
 import com.feedflow.domain.enums.auth.AuthProviderType
+import com.feedflow.domain.model.user.User
 import com.feedflow.domain.utils.Tsid
 import java.time.LocalDateTime
 
@@ -15,7 +16,7 @@ data class AuthProvider(
 ) {
 
   companion object{
-    fun createNew(providerId : String, email : String, authProviderType: AuthProviderType,user: User) : AuthProvider{
+    fun createNew(providerId : String, email : String, authProviderType: AuthProviderType,user: User) : AuthProvider {
       val now = LocalDateTime.now()
       return AuthProvider(
         id = Tsid.generate(),

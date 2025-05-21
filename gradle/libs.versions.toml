@@ -10,6 +10,7 @@ junit-platform  = "1.9.3"
 postgresql = "42.7.5"
 jjwt = "0.11.5"
 hypersistenceTsidVersion = "2.1.4"
+minioVersion = "8.5.17"
 
 [plugins]
 kotlin-jvm            = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -35,3 +36,4 @@ jjwt-api     = { module = "io.jsonwebtoken:jjwt-api",     version.ref = "jjwt" }
 jjwt-impl    = { module = "io.jsonwebtoken:jjwt-impl",    version.ref = "jjwt" }
 jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
 hypersistence-tsid = { group = "io.hypersistence", name = "hypersistence-tsid", version.ref = "hypersistenceTsidVersion" }
+minio = { group = "io.minio", name = "minio", version.ref = "minioVersion" }

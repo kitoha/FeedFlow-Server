@@ -1,12 +1,12 @@
 package com.feedflow.infrastructure.extractor
 
-import com.feedflow.application.dto.OAuth2UserInfo
-import com.feedflow.application.port.OAuth2UserInfoExtractor
+import com.feedflow.application.dto.oauth.OAuth2UserInfo
+import com.feedflow.application.port.oauth.OAuth2UserInfoExtractor
 import com.feedflow.domain.enums.auth.AuthProviderType
 import org.springframework.stereotype.Component
 
 @Component
-class GoogleOAuth2UserInfoExtractor : OAuth2UserInfoExtractor{
+class GoogleOAuth2UserInfoExtractor : OAuth2UserInfoExtractor {
 
   override fun extractUserInfo(attributes: Map<String, Any>): OAuth2UserInfo {
     return OAuth2UserInfo(

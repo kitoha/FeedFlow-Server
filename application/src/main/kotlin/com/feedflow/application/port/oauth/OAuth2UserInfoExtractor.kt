@@ -1,6 +1,6 @@
-package com.feedflow.application.port
+package com.feedflow.application.port.oauth
 
-import com.feedflow.application.dto.OAuth2UserInfo
+import com.feedflow.application.dto.oauth.OAuth2UserInfo
 import com.feedflow.domain.enums.auth.AuthProviderType
 
 interface OAuth2UserInfoExtractor {

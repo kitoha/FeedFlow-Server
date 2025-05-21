@@ -1,4 +1,4 @@
-package com.feedflow.application.dto
+package com.feedflow.application.dto.oauth
 
 data class OAuth2UserInfo(
   val providerId: String,

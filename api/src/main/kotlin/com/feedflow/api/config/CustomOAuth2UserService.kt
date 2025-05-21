@@ -1,7 +1,7 @@
 package com.feedflow.api.config
 
 import com.feedflow.api.dto.CustomOAuth2User
-import com.feedflow.application.port.OAuth2UserInfoExtractor
+import com.feedflow.application.port.oauth.OAuth2UserInfoExtractor
 import com.feedflow.application.service.user.UserService
 import com.feedflow.domain.enums.auth.AuthProviderType
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService

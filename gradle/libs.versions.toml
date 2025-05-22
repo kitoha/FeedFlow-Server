@@ -11,6 +11,7 @@ postgresql = "42.7.5"
 jjwt = "0.11.5"
 hypersistenceTsidVersion = "2.1.4"
 minioVersion = "8.5.17"
+kotlin-logging = "2.1.23"
 
 [plugins]
 kotlin-jvm            = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -37,3 +38,4 @@ jjwt-impl    = { module = "io.jsonwebtoken:jjwt-impl",    version.ref = "jjwt" }
 jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
 hypersistence-tsid = { group = "io.hypersistence", name = "hypersistence-tsid", version.ref = "hypersistenceTsidVersion" }
 minio = { group = "io.minio", name = "minio", version.ref = "minioVersion" }
+kotlin-logging = { group = "io.github.microutils", name = "kotlin-logging", version.ref = "kotlin-logging"}

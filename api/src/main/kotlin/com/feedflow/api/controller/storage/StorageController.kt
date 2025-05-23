@@ -39,6 +39,4 @@ class StorageController(
   ): ResponseEntity<MinioFileResponse> {
     return ResponseEntity.ok(fileService.generatePreSignUrl(fileName, bucketName))
   }
-
-
 }

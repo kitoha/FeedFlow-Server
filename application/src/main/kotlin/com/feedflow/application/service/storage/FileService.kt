@@ -20,6 +20,6 @@ class FileService(
   }
 
   fun generatePreSignUrl(fileName: String, bucketName: String): MinioFileResponse {
-    return fileStoragePort.generatePreSignUrl(fileName, bucketName, StorageMethod.GET)
+    return fileStoragePort.generatePreSignUrl(fileName, bucketName, StorageMethod.PUT)
   }
 }

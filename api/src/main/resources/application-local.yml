@@ -16,6 +16,7 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_SECRET_ID}
             scope: profile, email
+    debug: true
 
 feedflow:
   jwt:
@@ -34,3 +35,8 @@ app:
     redirect:
       success: ${OAUTH_REDIRECT_SUCCESS:http://localhost:3000/login}
       failure: ${OAUTH_REDIRECT_FAILURE:http://localhost:3000/login}
+
+server:
+  servlet:
+    session:
+      persistent: false

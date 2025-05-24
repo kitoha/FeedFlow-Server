@@ -30,9 +30,8 @@ class SecurityConfig(
         HttpMethod.GET,
         "/hello"
       ).permitAll()
-      .requestMatchers(HttpMethod.POST, "/api/v1/members/login").permitAll()
       .anyRequest().authenticated()
-    }
+    }.csrf { it.disable() }
       .oauth2Login { oauth2 ->
         oauth2.userInfoEndpoint { it.userService(customOAuth2UserService) }
           .successHandler(oAuth2AuthenticationSuccessHandler)

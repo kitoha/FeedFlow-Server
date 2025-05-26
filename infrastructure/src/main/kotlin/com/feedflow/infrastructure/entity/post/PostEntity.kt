@@ -11,6 +11,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.OrderColumn
 import jakarta.persistence.Table
 import java.time.LocalDateTime
 
@@ -29,11 +30,12 @@ class PostEntity(
 
   @ElementCollection
   @CollectionTable(
-    name = "post_media_urls",
+    name = "post_file_keys",
     joinColumns = [JoinColumn(name = "post_id")]
   )
-  @Column(name = "media_url", nullable = false)
-  var mediaUrls: MutableList<String> = mutableListOf(),
+  @OrderColumn(name = "idx")
+  @Column(name = "file_key", nullable = false)
+  var fileKeys: MutableList<String> = mutableListOf(),
 
   @Enumerated(EnumType.STRING)
   @Column(name = "visibility", nullable = false)
@@ -45,14 +47,14 @@ class PostEntity(
   @Column(name = "updated_at", nullable = false)
   var updatedAt: LocalDateTime,
 
-  @Column(name = "deleted_at", nullable = false)
+  @Column(name = "deleted_at")
   val deletedAt: LocalDateTime?
 ){
   fun toPost() : Post{
     return Post(id = Tsid.encode(id),
       authorId = authorId,
       content = content,
-      mediaUrls = mediaUrls.toMutableList(),
+      fileKeys = fileKeys.toMutableList(),
       visibility = visibility,
       createdAt =  createdAt,
       updatedAt = updatedAt,
@@ -65,7 +67,7 @@ class PostEntity(
         id = Tsid.decode(post.id),
         authorId = post.authorId,
         content = post.content,
-        mediaUrls = post.mediaUrls.toMutableList(),
+        fileKeys = post.fileKeys.toMutableList(),
         visibility = post.visibility,
         createdAt =  post.createdAt,
         updatedAt = post.updatedAt,

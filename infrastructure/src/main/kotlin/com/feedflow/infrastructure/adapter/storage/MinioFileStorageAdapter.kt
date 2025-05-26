@@ -1,9 +1,9 @@
 package com.feedflow.infrastructure.adapter.storage
 
-import com.feedflow.domain.model.storage.MinioFileResponse
+import com.feedflow.application.dto.stroage.PresignedUploadCommand
+import com.feedflow.domain.model.storage.PresignedResponse
 import com.feedflow.application.dto.stroage.UploadFileCommand
 import com.feedflow.application.port.storage.FileStoragePort
-import com.feedflow.domain.enums.storage.StorageMethod
 import com.feedflow.domain.exception.FileStorageException
 import com.feedflow.infrastructure.config.MinioProperties
 import com.feedflow.infrastructure.logging.log
@@ -12,6 +12,7 @@ import io.minio.errors.MinioException
 import io.minio.http.Method
 import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Service
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 @Service
@@ -69,26 +70,44 @@ class MinioFileStorageAdapter(
     }
   }
 
-  override fun generatePreSignUrl(
-    fileName: String,
-    bucketName: String,
-    method: StorageMethod
-  ): MinioFileResponse {
+  override fun generateUploadPresignedUrl(
+    presignedUploadCommand: PresignedUploadCommand
+  ): PresignedResponse {
     try {
-      val minioMethod = Method.valueOf(method.toString())
+      val fileKey = "${UUID.randomUUID()}_${presignedUploadCommand.fileName}"
+
       val presignedObjectUrlArgs = GetPresignedObjectUrlArgs.builder()
-        .method(minioMethod)
+        .method(Method.PUT)
+        .bucket(presignedUploadCommand.bucketName)
+        .`object`(fileKey)
+        .expiry(15, TimeUnit.MINUTES)
+        .extraHeaders(mapOf("Content-Type" to presignedUploadCommand.fileType))
+        .build()
+
+      val presignedUrl = minioClient.getPresignedObjectUrl(presignedObjectUrlArgs)
+
+      return PresignedResponse(fileName = presignedUploadCommand.fileName, fileUrl = presignedUrl)
+    } catch (e: Exception) {
+      log.error(e) { "Failed to generate presigned URL for '${presignedUploadCommand.fileName}' in bucket '${presignedUploadCommand.bucketName}'" }
+      throw FileStorageException.PreSignedUrlException(presignedUploadCommand.fileName, e)
+    }
+  }
+
+  override fun generateDownloadPresignedUrl(fileKey: String, bucketName: String): String {
+    try {
+      val presignedObjectUrlArgs = GetPresignedObjectUrlArgs.builder()
+        .method(Method.GET)
         .bucket(bucketName)
-        .`object`(fileName)
+        .`object`(fileKey)
         .expiry(15, TimeUnit.MINUTES)
         .build()
 
       val presignedUrl = minioClient.getPresignedObjectUrl(presignedObjectUrlArgs)
 
-      return MinioFileResponse(fileName = fileName, fileUrl = presignedUrl)
+      return presignedUrl
     } catch (e: Exception) {
-      log.error(e) { "Failed to generate presigned URL for '$fileName' in bucket '$bucketName'" }
-      throw FileStorageException.PreSignedUrlException(fileName, e)
+      log.error(e) { "Failed to generate download presigned URL for '$fileKey'" }
+      throw FileStorageException.PreSignedUrlException(fileKey, e)
     }
   }
 

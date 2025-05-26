@@ -1,6 +1,6 @@
 package com.feedflow.domain.model.storage
 
-data class MinioFileResponse(
+data class PresignedResponse(
   val fileName : String,
   val fileUrl : String
 )

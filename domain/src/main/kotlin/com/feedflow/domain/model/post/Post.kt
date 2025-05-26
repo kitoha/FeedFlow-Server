@@ -7,7 +7,7 @@ data class Post(
   val id: String,
   val authorId: String,
   var content: String,
-  var mediaUrls: MutableList<String> = mutableListOf(),
+  var fileKeys: MutableList<String> = mutableListOf(),
   var visibility: VisibilityType,
   val createdAt: LocalDateTime,
   var updatedAt: LocalDateTime,

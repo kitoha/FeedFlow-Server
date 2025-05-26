@@ -1,9 +1,9 @@
 package com.feedflow.application.service.storage
 
+import com.feedflow.application.dto.stroage.PresignedUploadCommand
 import com.feedflow.application.dto.stroage.UploadFileCommand
 import com.feedflow.application.port.storage.FileStoragePort
-import com.feedflow.domain.enums.storage.StorageMethod
-import com.feedflow.domain.model.storage.MinioFileResponse
+import com.feedflow.domain.model.storage.PresignedResponse
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,7 +19,7 @@ class FileService(
     return fileStoragePort.downloadFile(fileName, bucketName)
   }
 
-  fun generatePreSignUrl(fileName: String, bucketName: String): MinioFileResponse {
-    return fileStoragePort.generatePreSignUrl(fileName, bucketName, StorageMethod.PUT)
+  fun generatePreSignUrl(presignedUploadCommand: PresignedUploadCommand): PresignedResponse {
+    return fileStoragePort.generateUploadPresignedUrl(presignedUploadCommand)
   }
 }

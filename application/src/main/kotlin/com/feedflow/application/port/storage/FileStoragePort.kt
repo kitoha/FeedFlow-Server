@@ -1,13 +1,15 @@
 package com.feedflow.application.port.storage
 
+import com.feedflow.application.dto.stroage.PresignedUploadCommand
 import com.feedflow.application.dto.stroage.UploadFileCommand
-import com.feedflow.domain.enums.storage.StorageMethod
-import com.feedflow.domain.model.storage.MinioFileResponse
+import com.feedflow.domain.model.storage.PresignedResponse
 
 interface FileStoragePort {
   fun uploadFile(file: UploadFileCommand, bucketName: String): Boolean
 
   fun downloadFile(fileName: String, bucketName: String): ByteArray
 
-  fun generatePreSignUrl(fileName: String, bucketName: String, method: StorageMethod ) : MinioFileResponse
+  fun generateUploadPresignedUrl(presignedUploadCommand: PresignedUploadCommand) : PresignedResponse
+
+  fun generateDownloadPresignedUrl(fileKey: String, bucketName: String) : String
 }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 data class PostRequest(
   val authorId: String,
   val content: String,
-  val mediaUrls: List<String>,
+  val fileKeys: List<String>,
   val visibility: String
 ){
   fun toPost(): Post{
@@ -16,7 +16,7 @@ data class PostRequest(
     return Post(id = Tsid.generate(),
       authorId = authorId,
       content = content,
-      mediaUrls =  mediaUrls.toMutableList(),
+      fileKeys =  fileKeys.toMutableList(),
       visibility = VisibilityType.valueOf(visibility),
       createdAt = now,
       updatedAt = now,

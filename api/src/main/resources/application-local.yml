@@ -16,7 +16,27 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_SECRET_ID}
             scope: profile, email
+    debug: true
 
 feedflow:
   jwt:
     secret: ${JWT_SECRET_KEY}
+
+
+minio:
+  endpoint: http://localhost:9000
+  access-key: feedflowAdmin
+  secret-key: ${MINIO_PASSWORD}
+  buckets:
+    media: media-bucket
+
+app:
+  oauth:
+    redirect:
+      success: ${OAUTH_REDIRECT_SUCCESS:http://localhost:3000/login}
+      failure: ${OAUTH_REDIRECT_FAILURE:http://localhost:3000/login}
+
+server:
+  servlet:
+    session:
+      persistent: false

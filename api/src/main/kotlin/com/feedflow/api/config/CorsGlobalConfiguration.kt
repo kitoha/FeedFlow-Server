@@ -2,6 +2,7 @@ package com.feedflow.api.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -10,7 +11,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 class CorsGlobalConfiguration {
 
   @Bean("corsConfigurationSource")
-  @Profile("dev")
+  @Profile("local")
+  @Primary
   fun devCorsConfigurationSource(): UrlBasedCorsConfigurationSource {
     val configuration = CorsConfiguration()
     configuration.allowedOriginPatterns = listOf("*")

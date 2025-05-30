@@ -15,7 +15,8 @@ java {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":application"))
-
+    implementation(libs.kotlin.logging)
+    implementation(libs.minio)
     implementation(libs.spring.boot.starter.data.jpa)
     runtimeOnly   (libs.postgresql)
 }

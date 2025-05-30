@@ -22,4 +22,8 @@ class FileService(
   fun generatePreSignUrl(presignedUploadCommand: PresignedUploadCommand): PresignedResponse {
     return fileStoragePort.generateUploadPresignedUrl(presignedUploadCommand)
   }
+
+  fun generateDownloadPresignedUrl(fileKey: String, bucketName: String) : String{
+    return fileStoragePort.generateDownloadPresignedUrl(fileKey, bucketName)
+  }
 }

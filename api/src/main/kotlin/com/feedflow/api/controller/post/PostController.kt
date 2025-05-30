@@ -1,6 +1,7 @@
 package com.feedflow.api.controller.post
 
 import com.feedflow.api.request.PostRequest
+import com.feedflow.application.dto.post.PostResponse
 import com.feedflow.application.service.post.PostService
 import com.feedflow.domain.model.Page
 import com.feedflow.domain.model.Pageable
@@ -24,7 +25,7 @@ class PostController(private val postService: PostService) {
 
   @GetMapping("/v1/posts")
   fun findPosts(@RequestParam(defaultValue = "0") page: Int,
-    @RequestParam(defaultValue = "10") size: Int): ResponseEntity<Page<Post>>{
+    @RequestParam(defaultValue = "10") size: Int): ResponseEntity<Page<PostResponse>>{
     val pageable = Pageable(page = page, size = size)
     return ResponseEntity.ok(postService.findPosts(pageable))
   }

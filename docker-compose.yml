@@ -15,8 +15,7 @@ services:
     profiles:
       - local
     volumes:
-      - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
-      - ${POSTGRES_CONF_PATH}:/etc/postgresql.conf
+      - pgdata:/var/lib/postgresql/data
 
   ## minio 설정
   minio:
@@ -34,3 +33,6 @@ services:
       - type: bind
         source: "${MINIO_DATA_PATH}"
         target: /data
+
+volumes:
+  pgdata:

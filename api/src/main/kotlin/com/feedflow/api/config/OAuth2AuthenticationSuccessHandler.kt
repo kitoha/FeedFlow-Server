@@ -49,13 +49,4 @@ class OAuth2AuthenticationSuccessHandler(
 
     response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString())
   }
-
-  private fun redirectWithAccessToken(response: HttpServletResponse) {
-    val redirectUri = UriComponentsBuilder
-      .fromUriString(redirectProps.success)
-      .build()
-      .toUriString()
-
-    response.sendRedirect(redirectUri)
-  }
 }

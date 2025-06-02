@@ -29,7 +29,12 @@ class SecurityConfig(
       auth -> auth.requestMatchers(
         HttpMethod.GET,
         "/hello"
-      ).permitAll()
+      ).permitAll().requestMatchers(
+      HttpMethod.POST,
+      "/api/v1/auth/token",
+      "/api/v1/auth/refresh",
+      "/api/v1/auth/logout"
+    ).permitAll()
       .anyRequest().authenticated()
     }.csrf { it.disable() }
       .oauth2Login { oauth2 ->

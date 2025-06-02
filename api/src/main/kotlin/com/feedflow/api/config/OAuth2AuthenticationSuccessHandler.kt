@@ -1,10 +1,12 @@
 package com.feedflow.api.config
 
 import com.feedflow.api.dto.CustomOAuth2User
-import com.feedflow.api.dto.TokenResponse
+import com.feedflow.application.service.auth.RefreshTokenService
 import com.feedflow.domain.utils.Tsid
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseCookie
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.stereotype.Component
@@ -12,15 +14,14 @@ import org.springframework.web.util.UriComponentsBuilder
 
 @Component
 class OAuth2AuthenticationSuccessHandler(
+  private val refreshTokenService: RefreshTokenService,
   private val jwtTokenProvider: JwtTokenProvider,
   private val redirectProps: RedirectProperties
 ) : AuthenticationSuccessHandler {
-
   companion object {
-    private const val PARAM_TOKEN       = "token"
-    private const val PARAM_TOKEN_TYPE  = "tokenType"
-    private const val PARAM_ERROR       = "error"
-    private const val ERR_TOKEN_FAILED  = "token_generation_failed"
+    private const val REFRESH_TOKEN_COOKIE_NAME = "refresh_token"
+    private const val REFRESH_TOKEN_PATH = "/"
+    private const val REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 14 // 14 days
   }
 
   override fun onAuthenticationSuccess(
@@ -28,28 +29,33 @@ class OAuth2AuthenticationSuccessHandler(
     response: HttpServletResponse,
     authentication: Authentication
   ) {
-    try {
-      val oAuth2User = authentication.principal as CustomOAuth2User
-      val userId = oAuth2User.getUserId()
+    val oAuth2User = authentication.principal as CustomOAuth2User
+    val userId = Tsid.decode(oAuth2User.getUserId())
 
-      val token = jwtTokenProvider.generateToken(Tsid.decode(userId))
+    val refreshToken = refreshTokenService.createRefreshToken(userId)
 
-      val redirectUri = UriComponentsBuilder
-        .fromUriString(redirectProps.success)
-        .queryParam(PARAM_TOKEN, token)
-        .queryParam(PARAM_TOKEN_TYPE, TokenResponse.DEFAULT_TOKEN_TYPE)
-        .build()
-        .toUriString()
+    setRefreshTokenCookie(response, refreshToken.token)
+    response.sendRedirect(redirectProps.success)
+  }
 
-      response.sendRedirect(redirectUri)
-    } catch (e: Exception) {
-      val redirectUrl = UriComponentsBuilder
-        .fromUriString(redirectProps.failure)
-        .queryParam(PARAM_ERROR, ERR_TOKEN_FAILED)
-        .build()
-        .toUriString()
+  private fun setRefreshTokenCookie(response: HttpServletResponse, token: String) {
+    val cookie = ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, token)
+      .httpOnly(true)
+      .secure(true)
+      .path(REFRESH_TOKEN_PATH)
+      .maxAge(REFRESH_TOKEN_MAX_AGE.toLong())
+      .sameSite("Strict")
+      .build()
 
-      response.sendRedirect(redirectUrl)
-    }
+    response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString())
+  }
+
+  private fun redirectWithAccessToken(response: HttpServletResponse) {
+    val redirectUri = UriComponentsBuilder
+      .fromUriString(redirectProps.success)
+      .build()
+      .toUriString()
+
+    response.sendRedirect(redirectUri)
   }
 }

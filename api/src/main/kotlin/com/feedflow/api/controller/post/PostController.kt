@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api")
 class PostController(private val postService: PostService) {
   @PostMapping("/v1/posts")
-  fun createPost(@RequestBody postRequest: PostRequest){
+  fun createPost(@RequestBody postRequest: PostRequest) : ResponseEntity<PostResponse>{
     val post = postRequest.toPost()
-    postService.createPost(post)
+    return ResponseEntity.ok(postService.createPost(post))
   }
 
   @GetMapping("/v1/posts")

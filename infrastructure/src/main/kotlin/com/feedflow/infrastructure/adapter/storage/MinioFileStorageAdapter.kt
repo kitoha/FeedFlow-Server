@@ -86,7 +86,7 @@ class MinioFileStorageAdapter(
 
       val presignedUrl = minioClient.getPresignedObjectUrl(presignedObjectUrlArgs)
 
-      return PresignedResponse(fileName = presignedUploadCommand.fileName, fileUrl = presignedUrl)
+      return PresignedResponse(fileName = fileKey, fileUrl = presignedUrl)
     } catch (e: Exception) {
       log.error(e) { "Failed to generate presigned URL for '${presignedUploadCommand.fileName}' in bucket '${presignedUploadCommand.bucketName}'" }
       throw FileStorageException.PreSignedUrlException(presignedUploadCommand.fileName, e)

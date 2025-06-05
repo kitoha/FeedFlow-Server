@@ -5,7 +5,7 @@ import com.feedflow.domain.model.storage.PresignedResponse
 import com.feedflow.application.dto.stroage.UploadFileCommand
 import com.feedflow.application.port.storage.FileStoragePort
 import com.feedflow.domain.exception.FileStorageException
-import com.feedflow.infrastructure.config.MinioProperties
+import com.feedflow.infrastructure.config.minio.MinioProperties
 import com.feedflow.infrastructure.logging.log
 import io.minio.*
 import io.minio.errors.MinioException

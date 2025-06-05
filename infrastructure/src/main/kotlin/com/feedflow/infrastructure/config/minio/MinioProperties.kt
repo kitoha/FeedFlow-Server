@@ -1,4 +1,4 @@
-package com.feedflow.infrastructure.config
+package com.feedflow.infrastructure.config.minio
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component

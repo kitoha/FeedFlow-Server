@@ -13,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional
 class PostService(private val postRepository: PostRepository,
   private val postMapper: PostMapper) {
   @Transactional
-  fun createPost(post:Post){
-    postRepository.save(post)
+  fun createPost(post:Post) : PostResponse{
+    val newPost = postRepository.save(post)
+    return postMapper.toPostResponse(newPost)
   }
 
   @Transactional(readOnly = true)

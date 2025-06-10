@@ -5,7 +5,7 @@ import com.feedflow.domain.model.storage.PresignedResponse
 import com.feedflow.application.dto.stroage.UploadFileCommand
 import com.feedflow.application.port.storage.FileStoragePort
 import com.feedflow.domain.exception.FileStorageException
-import com.feedflow.infrastructure.config.MinioProperties
+import com.feedflow.infrastructure.config.minio.MinioProperties
 import com.feedflow.infrastructure.logging.log
 import io.minio.*
 import io.minio.errors.MinioException
@@ -86,7 +86,7 @@ class MinioFileStorageAdapter(
 
       val presignedUrl = minioClient.getPresignedObjectUrl(presignedObjectUrlArgs)
 
-      return PresignedResponse(fileName = presignedUploadCommand.fileName, fileUrl = presignedUrl)
+      return PresignedResponse(fileName = fileKey, fileUrl = presignedUrl)
     } catch (e: Exception) {
       log.error(e) { "Failed to generate presigned URL for '${presignedUploadCommand.fileName}' in bucket '${presignedUploadCommand.bucketName}'" }
       throw FileStorageException.PreSignedUrlException(presignedUploadCommand.fileName, e)

@@ -33,7 +33,7 @@ minio:
 app:
   oauth:
     redirect:
-      success: ${OAUTH_REDIRECT_SUCCESS:http://localhost:3000/login}
+      success: ${OAUTH_REDIRECT_SUCCESS:http://localhost:3000/login/success}
       failure: ${OAUTH_REDIRECT_FAILURE:http://localhost:3000/login}
 
 server:

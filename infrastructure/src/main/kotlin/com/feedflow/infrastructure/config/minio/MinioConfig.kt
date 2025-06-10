@@ -1,4 +1,4 @@
-package com.feedflow.infrastructure.config
+package com.feedflow.infrastructure.config.minio
 
 import io.minio.MinioClient
 import org.springframework.context.annotation.Bean

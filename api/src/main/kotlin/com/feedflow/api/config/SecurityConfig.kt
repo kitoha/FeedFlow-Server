@@ -22,6 +22,7 @@ class SecurityConfig(
   private val jwtTokenProvider: JwtTokenProvider,
   private val corsConfigSource: CorsConfigurationSource,
   private val oAuth2AuthenticationSuccessHandler: OAuth2AuthenticationSuccessHandler,
+  private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint
 ){
   @Bean
   fun filterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
@@ -29,7 +30,12 @@ class SecurityConfig(
       auth -> auth.requestMatchers(
         HttpMethod.GET,
         "/hello"
-      ).permitAll()
+      ).permitAll().requestMatchers(
+      HttpMethod.POST,
+      "/api/v1/auth/token",
+      "/api/v1/auth/refresh",
+      "/api/v1/auth/logout"
+    ).permitAll()
       .anyRequest().authenticated()
     }.csrf { it.disable() }
       .oauth2Login { oauth2 ->
@@ -42,9 +48,7 @@ class SecurityConfig(
       .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
       .exceptionHandling { exceptionHandling ->
         exceptionHandling
-          .authenticationEntryPoint { request, response, authException ->
-            handlerExceptionResolver.resolveException(request, response, null, authException)
-          }
+          .authenticationEntryPoint(jwtAuthenticationEntryPoint)
           .accessDeniedHandler { request, response, accessDeniedException ->
             handlerExceptionResolver.resolveException(request, response, null, accessDeniedException)
           }
@@ -65,10 +69,13 @@ class SecurityConfig(
     return AuthenticationManager { authentication ->
       val principal = authentication.principal
       if (principal is String) {
-        val memberId = jwtTokenProvider.getMemberId(principal)
-
-        PreAuthenticatedAuthenticationToken(memberId, principal).apply {
-          isAuthenticated = true
+        try {
+          val memberId = jwtTokenProvider.getMemberId(principal)
+          PreAuthenticatedAuthenticationToken(memberId, principal).apply {
+            isAuthenticated = true
+          }
+        } catch (ex: Exception) {
+          throw BadCredentialsException("Invalid accessToken", ex)
         }
       } else {
         throw BadCredentialsException("Invalid accessToken")
